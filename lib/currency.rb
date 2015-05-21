@@ -14,6 +14,8 @@ class Currency
     if class_and_code_equal?(self, obj)
       self.amount += obj.amount
       self
+    elsif self.is_a?(obj.class)
+      raise DifferentCurrencyCodeError
     end
   end
 
@@ -21,6 +23,8 @@ class Currency
     if class_and_code_equal?(self, obj)
       self.amount -= obj.amount
       self
+    elsif self.is_a?(obj.class)
+      raise DifferentCurrencyCodeError
     end
   end
 
@@ -28,4 +32,7 @@ class Currency
     obj1.is_a?(obj2.class) && obj1.code.equal?(obj2.code) ? true : false
   end
 
+end
+
+class DifferentCurrencyCodeError < StandardError
 end

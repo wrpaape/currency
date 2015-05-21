@@ -27,12 +27,12 @@ class CurrencyTest < Minitest::Test
 
   def test_Currency_add
     assert_equal(@amount_init + @amount_diff, (@curr_init + @curr_diff_amount).amount)
-    assert_equal(nil, @curr_init + @curr_diff_code)
+    assert_raises(DifferentCurrencyCodeError) do (@curr_init + @curr_diff_code) end
   end
 
   def test_Currency_subtract
     assert_equal(@amount_init - @amount_diff, (@curr_init - @curr_diff_amount).amount)
-    assert_equal(nil, @curr_init - @curr_diff_code)
+    assert_raises(DifferentCurrencyCodeError) do (@curr_init - @curr_diff_code) end
   end
 
 end
