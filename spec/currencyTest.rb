@@ -4,23 +4,29 @@ require_relative '../lib/currency.rb'
 class CurrencyTest < Minitest::Test
 
   def setup
-    @amount = 100
-    @code = "$"
-    @currency = Currency.new(@amount, @code)
+    @amount_init = 100
+    @amount_diff = 500
+    code_init = "$"
+    code_diff = "¥"
+    @curr_init = Currency.new(@amount_init, code_init)
+    @curr_same = Currency.new(@amount_init, code_init)
+    @curr_diff_amount = Currency.new(@amount_diff, code_init)
+    @curr_diff_code = Currency.new(@amount_init, code_diff)
   end
 
   def test_Currency_amount_and_code_exist
-    assert(@currency.amount)
-    assert(@currency.code)
+    assert(@curr_init.amount)
+    assert(@curr_init.code)
   end
 
   def test_parallel_Currency_objects
-    currency_same = Currency.new(@amount, @code)
-    currency_diff_amount = Currency.new(500, @code)
-    currency_diff_code = Currency.new(@amount, "¥")
-    assert_equal(true, @currency == currency_same)
-    assert_equal(false, @currency == currency_diff_amount)
-    assert_equal(false, @currency == currency_diff_code)
+    assert_equal(true, @curr_init == @curr_same)
+    assert_equal(false, @curr_init == @curr_diff_amount)
+    assert_equal(false, @curr_init == @curr_diff_code)
   end
+  def test_Currency_add
+    assert_equal(@amount_init + @amount_diff, (@curr_init + @curr_diff_amount).amount)
+  end
+
 
 end
