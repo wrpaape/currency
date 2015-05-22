@@ -1,6 +1,6 @@
 require "minitest/autorun"
 require_relative '../lib/currency.rb'
 
-class CurrencyConverterTest < Minitest::Test
+class Currency_converter_test < Minitest::Test
 
 end
