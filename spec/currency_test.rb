@@ -43,7 +43,7 @@ class Currency_test < Minitest::Test
     assert_equal(10, (@float_num * @curr_init).amount)
     assert_equal(10, (@curr_init * @float_num).amount)
     assert_equal(10000, (@curr_init * @curr_same).amount)
-    assert_raises(DifferentCurrencyCodeError) do (@curr_init * @curr_diff_code) end
+    assert_raises(DifferentCurrencyCodeError) do @curr_init * @curr_diff_code end
   end
 
 end
