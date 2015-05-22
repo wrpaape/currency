@@ -8,4 +8,8 @@ CONV_RATES = "1.00000 0.90867 0.64620 63.4724 1.27968 1.23039 11.8959 1.36916 12
     CURR_CODES.each_with_index { |code, ind| @curr_table[code.to_sym] = CONV_RATES[ind].to_f }
   end
 
+  def convert(curr_init, code_new)
+    Currency.new(curr_init.amount * @curr_table[code_new.to_sym], code_new)
+  end
+
 end
