@@ -12,8 +12,7 @@ class Currency
 
   def +(obj)
     if class_and_code_equal?(self, obj)
-      self.amount += obj.amount
-      self
+      Currency.new(amount + obj.amount, code)
     elsif self.is_a?(obj.class)
       raise DifferentCurrencyCodeError
     end
@@ -21,8 +20,7 @@ class Currency
 
   def -(obj)
     if class_and_code_equal?(self, obj)
-      self.amount -= obj.amount
-      self
+      Currency.new(amount - obj.amount, code)
     elsif self.is_a?(obj.class)
       raise DifferentCurrencyCodeError
     end

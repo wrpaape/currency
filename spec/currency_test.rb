@@ -8,8 +8,8 @@ class Currency_test < Minitest::Test
     @amount_diff = 500
     @fixnum_num = 50
     @float_num = 0.1.to_f
-    code_init = "$"
-    code_diff = "¥"
+    code_init = "USD"
+    code_diff = "JPY"
     @curr_init = Currency.new(@amount_init, code_init)
     @curr_same = Currency.new(@amount_init, code_init)
     @curr_diff_amount = Currency.new(@amount_diff, code_init)
