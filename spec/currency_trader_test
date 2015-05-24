@@ -1,0 +1,8 @@
+require "minitest/autorun"
+require_relative '../lib/currency_trader.rb'
+require_relative '../lib/currency_converter.rb'
+require_relative '../lib/currency.rb'
+
+class Currency_trader_test < Minitest::Test
+
+end

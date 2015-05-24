@@ -33,4 +33,17 @@ class Currency_converter_test < Minitest::Test
   def test_currency_converter_rejects_small_input_tables
     assert_raises(InputTableTooShort) do Currency_converter.new({USD: 1.0, EUR: 0.74}) end
   end
+
+  def test_currency_converter_converts_to_any_known_currency
+    assert_equal(0.90867 / 0.64620, (@cc_default.convert(Currency.new(1, "GBP"), "EUR")).amount)
+    assert_equal(1.36916 / 1.27968, (@cc_default.convert(Currency.new(1, "AUD"), "NZD")).amount)
+  end
+
+  def test_currency_converter_raises_error_if_code_unknown
+    curr_LOL = Currency.new(1, "LOL")
+    cc_w_LOL = Currency_converter.new({USD: 1.0, EUR: 0.74, LOL: 0.001})
+    assert_raises(UnkownCurrencyCodeError) do @cc_default.convert(@curr_USD, "LOL") end
+    assert_raises(UnkownCurrencyCodeError) do @cc_default.convert(curr_LOL, "USD") end
+    assert_equal(0.74 / 0.001, cc_w_LOL.convert(curr_LOL, "EUR").amount)
+  end
 end

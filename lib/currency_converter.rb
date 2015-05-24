@@ -8,17 +8,19 @@ CURR_CODES.each_with_index { |code, ind| CURR_TABLE[code.to_sym] = CONV_RATES[in
   def initialize(curr_table = CURR_TABLE)
     raise InputTableTooShort unless curr_table.length >= 3
     @curr_table = curr_table
-
   end
 
   def convert(curr_init, code_new)
+    raise UnkownCurrencyCodeError unless @curr_table.keys.include?(curr_init.code.to_sym) && @curr_table.keys.include?(code_new.to_sym)
     conv_coeff = @curr_table[code_new.to_sym] / @curr_table[curr_init.code.to_sym]
     curr_new = curr_init * conv_coeff
     curr_new.code = code_new
     curr_new
   end
-
 end
 
 class InputTableTooShort < StandardError
+end
+
+class UnkownCurrencyCodeError < StandardError
 end
