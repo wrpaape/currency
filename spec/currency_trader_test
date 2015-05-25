@@ -3,6 +3,25 @@ require_relative '../lib/currency_trader.rb'
 require_relative '../lib/currency_converter.rb'
 require_relative '../lib/currency.rb'
 
-class Currency_trader_test < Minitest::Test
+CURR_CODES = "USD EUR GBP INR AUD CAD ZAR NZD JPY".split(" ")
+CONV_RATES_OLD = "1.00000 0.90867 0.64620 63.4724 1.27968 1.23039 11.8959 1.36916 121.543".split(" ")
+CURR_TABLE_OLD = Hash.new
+CURR_CODES.each_with_index { |code, ind| CURR_TABLE_OLD[code.to_sym] = CONV_RATES_OLD[ind].to_f }
+CONV_RATES_NEW = "1.00000 0.90987 0.64621 63.4940 1.27866 1.22941 11.9071 1.36882 121.552".split(" ")
+CURR_TABLE_NEW = Hash.new
+CURR_CODES.each_with_index { |code, ind| CURR_TABLE_NEW[code.to_sym] = CONV_RATES_NEW[ind].to_f }
 
+class Currency_trader_test < Minitest::Test
+  def setup
+    @ct = Currency_trader.new(CURR_TABLE_OLD, CURR_TABLE_NEW, Currency.new(1000000, "JPY"))
+  end
+
+  def test_old_and_new_currency_converter_objects_exist
+    assert(@ct.cc_old)
+    assert(@ct.cc_new)
+  end
+
+  def test_best_bet_exists
+    assert(@ct.best_bet)
+  end
 end
