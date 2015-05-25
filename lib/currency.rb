@@ -1,9 +1,27 @@
 class Currency
   attr_accessor :amount, :code
+  CURR_CODE_SYMS = {USD: "$", EUR: "€", GBP: "£", INR: "₹", AUD: "A", CAD: "C", ZAR: "R", NZD: "N", JPY: "¥"}
 
-  def initialize(amount, code)
-    @amount = amount
-    @code = code
+  def initialize(amount, *code)
+    if amount.is_a?(String)
+      case amount[0, 1]
+      when "A"
+        @amount = amount[3, amount.size].to_f
+        @code = "AUD"
+      when "C"
+        @amount = amount[3, amount.size].to_f
+        @code = "CAD"
+      when "N"
+        @amount = amount[3, amount.size].to_f
+        @code = "NZD"
+      else
+        @amount = amount[1, amount.size].to_f
+        @code = CURR_CODE_SYMS.key(amount[0, 1]).to_s
+      end
+    else
+      @amount = amount
+      @code = code[0]
+    end
   end
 
   def ==(obj)

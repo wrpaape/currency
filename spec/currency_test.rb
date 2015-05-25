@@ -22,6 +22,7 @@ class Currency_test < Minitest::Test
   end
 
   def test_parallel_currency_objects
+    puts (@curr_same == @curr_init).inspect
     assert_equal(true, @curr_init == @curr_same)
     assert_equal(false, @curr_init == @curr_diff_amount)
     assert_equal(false, @curr_init == @curr_diff_code)
@@ -44,5 +45,14 @@ class Currency_test < Minitest::Test
     assert_equal(10, (@curr_init * @float_num).amount)
     assert_equal(10000, (@curr_init * @curr_same).amount)
     assert_raises(DifferentCurrencyCodeError) do @curr_init * @curr_diff_code end
+  end
+
+  def test_single_argument
+    curr_USD = Currency.new("$500")
+    curr_JPY = Currency.new("¥500.0")
+    curr_NZD = Currency.new("NZ$500")
+    assert_equal(500, curr_USD.amount)
+    assert_equal("JPY", curr_JPY.code)
+    assert_equal("NZD", curr_NZD.code)
   end
 end
