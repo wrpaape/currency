@@ -23,5 +23,12 @@ class Currency_trader_test < Minitest::Test
 
   def test_best_bet_exists
     assert(@ct.best_bet)
+    puts @ct.best_bet
+  end
+
+  def test_currency_trader_trades_to_most_appreciating_currency
+    curr_table_old = {:LOL = 0.5, :IDK = 1.0, :WTF = 150}
+    curr_table_new = {:LOL = 0.6, :IDK = 1.0, :WTF = 140}
+    @ct_LOL = Currency_trader.new(CURR_TABLE_OLD, CURR_TABLE_NEW, Currency.new(1000000, "LOL"))
   end
 end
