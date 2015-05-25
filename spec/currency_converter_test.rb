@@ -40,10 +40,10 @@ class Currency_converter_test < Minitest::Test
   end
 
   def test_currency_converter_raises_error_if_code_unknown
-    curr_LOL = Currency.new(1, "LOL")
-    cc_w_LOL = Currency_converter.new({USD: 1.0, EUR: 0.74, LOL: 0.001})
+    curr_LOL2 = Currency.new(1, "LOL")
+    cc_w_LOL2 = Currency_converter.new({USD: 1.0, EUR: 0.74, LOL: 0.001})
     assert_raises(UnkownCurrencyCodeError) do @cc_default.convert(@curr_USD, "LOL") end
-    assert_raises(UnkownCurrencyCodeError) do @cc_default.convert(curr_LOL, "USD") end
-    assert_equal(0.74 / 0.001, cc_w_LOL.convert(curr_LOL, "EUR").amount)
+    assert_raises(UnkownCurrencyCodeError) do @cc_default.convert(curr_LOL2, "USD") end
+    assert_equal(0.74 / 0.001, cc_w_LOL2.convert(curr_LOL2, "EUR").amount)
   end
 end

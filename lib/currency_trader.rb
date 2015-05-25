@@ -30,6 +30,7 @@ class Currency_trader
     @cc_old.curr_table.each do |curr2_code, curr2_rate_old|
       delta_curr2_rate[curr2_code] = (@cc_new.curr_table[curr2_code] - curr2_rate_old) / curr2_rate_old
     end
+    puts delta_curr2_rate.inspect
     delta_curr2_rate.key(delta_curr2_rate.values.min)
   end
 
