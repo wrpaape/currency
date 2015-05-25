@@ -14,6 +14,14 @@ CURR_CODES.each_with_index { |code, ind| CURR_TABLE_NEW[code.to_sym] = CONV_RATE
 class Currency_trader_test < Minitest::Test
   def setup
     @ct = Currency_trader.new(CURR_TABLE_OLD, CURR_TABLE_NEW, Currency.new(1000000, "JPY"))
+    curr_table_old = {LOL: 0.5, IDK: 1.0, WTF: 150}
+    curr_table_new = {LOL: 0.6, IDK: 1.0, WTF: 140}
+    @ct_LOL = Currency_trader.new(curr_table_old, curr_table_new, Currency.new(1000000, "LOL"))
+    @ct_IDK = Currency_trader.new(curr_table_old, curr_table_new, Currency.new(1000000, "IDK"))
+    @ct_WTF = Currency_trader.new(curr_table_old, curr_table_new, Currency.new(1000000, "WTF"))
+    @ct_LOL.best_bet
+    @ct_IDK.best_bet
+    @ct_WTF.best_bet
   end
 
   def test_old_and_new_currency_converter_objects_exist
@@ -23,12 +31,17 @@ class Currency_trader_test < Minitest::Test
 
   def test_best_bet_exists
     assert(@ct.best_bet)
-    puts @ct.best_bet
   end
 
   def test_currency_trader_trades_to_most_appreciating_currency
-    curr_table_old = {:LOL = 0.5, :IDK = 1.0, :WTF = 150}
-    curr_table_new = {:LOL = 0.6, :IDK = 1.0, :WTF = 140}
-    @ct_LOL = Currency_trader.new(CURR_TABLE_OLD, CURR_TABLE_NEW, Currency.new(1000000, "LOL"))
+    assert_equal(:WTF, @ct_LOL.code_best_trade)
+    assert_equal(:WTF, @ct_IDK.code_best_trade)
+    assert_equal(:WTF, @ct_WTF.code_best_trade)
+  end
+
+  def test_currency_trader_returns_positive_roi_except_in_case_of_starting_w_most_appreciating_currency
+    assert_equal(true, @ct_LOL.roi.amount > 0)
+    assert_equal(true, @ct_IDK.roi.amount > 0)
+    assert_equal(true, @ct_WTF.roi.amount == 0)
   end
 end
