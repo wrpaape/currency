@@ -21,14 +21,15 @@ class Currency_trader
     @curr_current = @cc_objs.last.convert(@curr_current, @curr_start.code)
     @roi = @curr_current - @curr_start
 
+    trade_path = build_trade_path
+
     """
-    best trade:     #{code_best_trades[0].to_s}
-    starting funds: #{@curr_start.amount.round(2)} #{@curr_start.code}
-    final funds:    #{@roi.amount.round(2)} #{@curr_start.code}
-    ROI:            #{@roi.amount.round(2)} #{@curr_start.code}
+    best trade path:  #{trade_path}
+    starting funds:   #{@curr_start.amount.round(2)} #{@curr_start.code}
+    final funds:      #{@curr_current.amount.round(2)} #{@curr_start.code}
+    ROI:              #{@roi.amount.round(2)} #{@curr_start.code}
     """ +
-    "For the span of time provided, trading to #{code_best_trades[0].to_s} at the start before trading back to " +
-    "#{@curr_start.code} at the end would yield the greatest return on investment"
+    "For the span of time provided, trading according to the 'best trade path' would yield the greatest return on investment"
   end
 
   def most_appreciating_currency(cc_obj_old, cc_obj_new)
@@ -38,5 +39,11 @@ class Currency_trader
       delta_curr_rate[curr_code] = (cc_obj_new.curr_table[curr_code] - curr_rate_old) / curr_rate_old
     end
     delta_curr_rate.key(delta_curr_rate.values.min)
+  end
+
+  def build_trade_path
+    trade_path = "#{@curr_start.code} >> "
+    @code_best_trades.each { |code| trade_path += code.to_s + " >> " }
+    trade_path += "#{@curr_start.code}"
   end
 end

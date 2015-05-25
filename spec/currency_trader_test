@@ -92,7 +92,12 @@ class Currency_trader_test < Minitest::Test
     assert_equal(1, @ct_WTF3.roi.amount <=> 0)
   end
 
-  def test_currency_trader_returns_best_trades
+  def test_currency_trader_returns_best_trades_according_to_most_appreciating_currency
+    @ct_mult_trade.best_trades
+    assert_equal(:IDK, @ct_mult_trade.code_best_trades[0])
+    assert_equal(:WTF, @ct_mult_trade.code_best_trades[1])
+    assert_equal(:OMG, @ct_mult_trade.code_best_trades[2])
+    assert_equal(:OMG, @ct_mult_trade.code_best_trades[3])
   end
 
 end

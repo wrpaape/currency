@@ -49,10 +49,13 @@ class Currency_test < Minitest::Test
 
   def test_single_argument
     curr_USD = Currency.new("$500")
-    curr_JPY = Currency.new("¥500.0")
-    curr_NZD = Currency.new("NZ$500")
+    curr_JPY = Currency.new("¥900.0")
+    curr_NZD = Currency.new("NZ$100.00000")
+    assert_equal("USD", curr_USD.code)
     assert_equal(500, curr_USD.amount)
     assert_equal("JPY", curr_JPY.code)
+    assert_equal(900, curr_JPY.amount)
     assert_equal("NZD", curr_NZD.code)
+    assert_equal(100, curr_NZD.amount)
   end
 end
