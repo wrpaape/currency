@@ -14,26 +14,30 @@ CURR_CODES.each_with_index { |code, ind| CURR_TABLE_NEW[code.to_sym] = CONV_RATE
 class Currency_trader_test < Minitest::Test
   def setup
     @ct = Currency_trader.new(CURR_TABLE_OLD, CURR_TABLE_NEW, Currency.new(1000000, "JPY"))
-    curr_table_old1 = {LOL: 0.5, IDK: 1.0, WTF: 150}
-    curr_table_new1 = {LOL: 0.6, IDK: 1.0, WTF: 140}
+    curr_table_old1 = {LOL: 0.5, IDK: 1.0, WTF: 150.0}
+    curr_table_new1 = {LOL: 0.6, IDK: 1.0, WTF: 140.0}
     @ct_LOL1 = Currency_trader.new(curr_table_old1, curr_table_new1, Currency.new(1000000, "LOL"))
     @ct_IDK1 = Currency_trader.new(curr_table_old1, curr_table_new1, Currency.new(1000000, "IDK"))
     @ct_WTF1 = Currency_trader.new(curr_table_old1, curr_table_new1, Currency.new(1000000, "WTF"))
     @ct_LOL1.best_bet
     @ct_IDK1.best_bet
     @ct_WTF1.best_bet
-    curr_table_old2 = {LOL: 0.5, IDK: 1.0, WTF: 100}
-    curr_table_new2 = {LOL: 0.3, IDK: 1.0, WTF: 60}
+    curr_table_old2 = {LOL: 0.5, IDK: 1.0, WTF: 150.0}
+    curr_table_new2 = {LOL: 0.3, IDK: 1.0, WTF: 140.0}
     @ct_LOL2 = Currency_trader.new(curr_table_old2, curr_table_new2, Currency.new(1000000, "LOL"))
     @ct_IDK2 = Currency_trader.new(curr_table_old2, curr_table_new2, Currency.new(1000000, "IDK"))
     @ct_WTF2 = Currency_trader.new(curr_table_old2, curr_table_new2, Currency.new(1000000, "WTF"))
     @ct_LOL2.best_bet
     @ct_IDK2.best_bet
     @ct_WTF2.best_bet
-
-    # puts @ct_LOL2.best_bet
-    # puts @ct_IDK2.best_bet
-    # puts @ct_WTF2.best_bet
+    curr_table_old3 = {LOL: 0.5, IDK: 1.0, WTF: 150.0}
+    curr_table_new3 = {LOL: 0.8, IDK: 0.7, WTF: 200.0}
+    @ct_LOL3 = Currency_trader.new(curr_table_old3, curr_table_new3, Currency.new(1000000, "LOL"))
+    @ct_IDK3 = Currency_trader.new(curr_table_old3, curr_table_new3, Currency.new(1000000, "IDK"))
+    @ct_WTF3 = Currency_trader.new(curr_table_old3, curr_table_new3, Currency.new(1000000, "WTF"))
+    @ct_LOL3.best_bet
+    @ct_IDK3.best_bet
+    @ct_WTF3.best_bet
   end
 
   def test_old_and_new_currency_converter_objects_exist
@@ -53,6 +57,10 @@ class Currency_trader_test < Minitest::Test
     assert_equal(:LOL, @ct_LOL2.code_best_trade)
     assert_equal(:LOL, @ct_IDK2.code_best_trade)
     assert_equal(:LOL, @ct_WTF2.code_best_trade)
+
+    assert_equal(:IDK, @ct_LOL3.code_best_trade)
+    assert_equal(:IDK, @ct_IDK3.code_best_trade)
+    assert_equal(:IDK, @ct_WTF3.code_best_trade)
   end
 
   def test_currency_trader_returns_proper_value_roi_for_LOLIDKWTF_tables
@@ -60,8 +68,12 @@ class Currency_trader_test < Minitest::Test
     assert_equal(1, @ct_IDK1.roi.amount <=> 0)
     assert_equal(0, @ct_WTF1.roi.amount <=> 0)
 
-    assert_equal(1, @ct_LOL2.roi.amount <=> 0)
-    assert_equal(0, @ct_IDK2.roi.amount <=> 0)
+    assert_equal(0, @ct_LOL2.roi.amount <=> 0)
+    assert_equal(1, @ct_IDK2.roi.amount <=> 0)
     assert_equal(1, @ct_WTF2.roi.amount <=> 0)
+
+    assert_equal(1, @ct_LOL3.roi.amount <=> 0)
+    assert_equal(0, @ct_IDK3.roi.amount <=> 0)
+    assert_equal(1, @ct_WTF3.roi.amount <=> 0)
   end
 end

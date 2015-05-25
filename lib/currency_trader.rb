@@ -21,7 +21,6 @@ class Currency_trader
     """ +
     "For the span of time provided, trading to #{code_best_trade.to_s} at the start before trading back to " +
     "#{@curr_start.code} at the end would yield the greatest return on investment"
-
   end
 
   def most_appreciating_currency
@@ -30,7 +29,6 @@ class Currency_trader
     @cc_old.curr_table.each do |curr2_code, curr2_rate_old|
       delta_curr2_rate[curr2_code] = (@cc_new.curr_table[curr2_code] - curr2_rate_old) / curr2_rate_old
     end
-    puts delta_curr2_rate.inspect
     delta_curr2_rate.key(delta_curr2_rate.values.min)
   end
 

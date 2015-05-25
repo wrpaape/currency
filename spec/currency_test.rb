@@ -45,5 +45,4 @@ class Currency_test < Minitest::Test
     assert_equal(10000, (@curr_init * @curr_same).amount)
     assert_raises(DifferentCurrencyCodeError) do @curr_init * @curr_diff_code end
   end
-
 end
