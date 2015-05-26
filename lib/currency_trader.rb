@@ -1,6 +1,3 @@
-require_relative 'currency.rb'
-require_relative 'currency_converter.rb'
-
 class Currency_trader
   attr_reader :cc_objs, :code_best_trades, :best_trades, :roi
 
