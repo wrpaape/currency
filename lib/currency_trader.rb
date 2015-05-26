@@ -8,22 +8,22 @@ class Currency_trader
 
   def best_trades
     @code_best_trades = []
-    @curr_current = @curr_start
+    curr_current = @curr_start
     @cc_objs.each_with_index do |cc_obj, ind|
       break if ind == @cc_objs.size - 1
       @code_best_trades << most_appreciating_currency(@cc_objs[ind], @cc_objs[ind + 1])
-      @curr_current = cc_obj.convert(@curr_current, @code_best_trades.last)
+      curr_current = cc_obj.convert(curr_current, @code_best_trades.last)
     end
 
-    @curr_current = @cc_objs.last.convert(@curr_current, @curr_start.code)
-    @roi = @curr_current - @curr_start
+    curr_final = @cc_objs.last.convert(curr_current, @curr_start.code)
+    @roi = curr_final - @curr_start
 
     trade_path = build_trade_path
 
     """
     best trade path:  #{trade_path}
     starting funds:   #{@curr_start.amount.round(2)} #{@curr_start.code}
-    final funds:      #{@curr_current.amount.round(2)} #{@curr_start.code}
+    final funds:      #{curr_final.amount.round(2)} #{curr_final.code}
     ROI:              #{@roi.amount.round(2)} #{@curr_start.code}
     """ +
     "For the span of time provided, trading according to the 'best trade path' would yield the greatest return on investment"
