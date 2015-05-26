@@ -58,5 +58,6 @@
 
   -Currency_trader objects possess the method .best_trades which returns a string detailing information on the series of best trades over the give timespan
 
+
 'spec' contains three test files with each file testing a single class
 
